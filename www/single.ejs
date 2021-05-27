@@ -1,0 +1,18 @@
+<!-- Load a component -->
+<%- include('statics/header') -%>
+
+<main>
+    <section>
+        <h1><%- data.title %></h1>
+        <p><%- data.content %></p>
+
+        <!-- Include comment list -->
+        <%- include('components/list-comment') -%>
+
+        <!-- Include comment form -->
+        <%- include('components/form-comment') -%>
+    </section>
+</main>
+
+<!-- Load a component -->
+<%- include('statics/footer') -%>

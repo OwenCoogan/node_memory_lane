@@ -1,0 +1,13 @@
+<!-- Load a component -->
+<%- include('statics/header') -%>
+
+<main>
+    <!-- Check url to dsiplay the correct edit form -->
+    <% if( url.indexOf('post') !== -1 ) {%>
+        <h2>Ajouter un article</h2>
+        <%- include('components/form-post') -%>
+    <% } %>
+</main>
+
+<!-- Load a component -->
+<%- include('statics/footer') -%>

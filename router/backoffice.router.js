@@ -30,6 +30,21 @@ Defintiion
                 })
             })
 
+            this.router.post('api/post/create', (req, res) => {
+                Controllers.post.createOne(req)
+                .then( res => {
+                    console.log(res)
+                    res.send(res)
+                })
+                .catch( apiError => {
+                    // Render create vue with error
+                    console.log(apiError)
+                })
+            })
+
+
+
+
             this.router.get('/api/post/:id', (req, res) => {
                 // Get all posts from the BDD
                 Controllers.post.readOne(req)

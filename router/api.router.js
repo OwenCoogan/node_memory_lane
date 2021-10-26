@@ -1,4 +1,4 @@
-/* 
+/*
 Imports
 */
     // Node
@@ -6,7 +6,7 @@ Imports
     const Controllers = require('../controller/index');
 //
 
-/* 
+/*
 Defintiion
 */
     class RouterClass{
@@ -16,22 +16,27 @@ Defintiion
         }
 
         routes(){
-            // TODO: create service to send data
-            
-            // Define API route
-            this.router.get('/', (req, res) => {
-                // Rerturn JSON data
-                return res.json( { msg: "Hello API" } )
+
+            this.router.get('/posts/', (req, res) => {
+                Controllers.post.readAll()
+                .then( apiResponse => res.json( { data: apiResponse, err: null } ))
+                .catch( apiError => res.json( { data: null, err: apiError } ))
             })
 
             // Define API route to create on data
             this.router.post('/post/create', (req, res) => {
 
-                // TODO: check body data
+            // TODO: check body data
                 Controllers.post.createOne(req)
                 .then( apiResponse => res.json( { data: apiResponse, err: null } ))
                 .catch( apiError => res.json( { data: null, err: apiError } ))
             })
+            this.router.get('/posts/', (res) => {
+                Controllers.post.readAll()
+                .then( apiResponse => res.json( { data: apiResponse, err: null } ))
+                .catch( apiError => res.json( { data: null, err: apiError } ))
+            })
+
 
             // Define API route to get all data
             this.router.get('/:endpoint', (req, res) => {
@@ -80,7 +85,7 @@ Defintiion
 
 //
 
-/* 
+/*
 Export
 */
     module.exports = RouterClass;

@@ -1,4 +1,3 @@
-version: "1"
 services:
   node:
     image: node-app:latest
@@ -11,7 +10,6 @@ services:
       - "6950:6950"
     networks:
       - database
-
   mongo:
     image: mongo
     volumes:

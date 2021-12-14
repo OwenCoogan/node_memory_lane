@@ -1,20 +1,21 @@
-/* 
+/*
 Imports
 */
     const mongoose = require('mongoose');  //=> https://www.npmjs.com/package/mongoose
     const { Schema } = mongoose;
 //
 
-/* 
+/*
 Definition
 */
     const MySchema = new Schema({
         title: { type: String },
-        content: String,
+        content: { type: String },
+
         comments: [{
             type: Schema.Types.ObjectId,
             ref: 'comment'
-        }], 
+        }],
 
         // Always use those properties
         author: {
@@ -40,7 +41,7 @@ Definition
     })
 //
 
-/* 
+/*
 Exports
 */
     const MyModel = mongoose.model('post', MySchema);

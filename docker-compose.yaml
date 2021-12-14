@@ -1,0 +1,28 @@
+version: "1.0"
+services:
+  node:
+    image: node-app:latest
+    restart: always
+    volumes:
+      - ./:/var/www
+    ports:
+      - "6950:6950"
+    networks:
+      - database
+
+  mongo:
+    image: mongo
+    volumes:
+      - "./mongo/data:/data/db"
+    ports:
+      - "27018:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    networks:
+      - database
+
+networks:
+  database:
+    driver: bridge
+

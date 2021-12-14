@@ -1,7 +1,9 @@
-version: "1.0"
+version: 1
 services:
-  node-app:
+  node:
     image: node-app:latest
+    build:
+      dockerfile:Dockerfile
     restart: always
     volumes:
       - ./:/var/www

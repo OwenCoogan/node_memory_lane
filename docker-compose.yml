@@ -1,5 +1,5 @@
 services:
-  node:
+  node-app:
     image: node-app:latest
     build:
       dockerfile:Dockerfile

@@ -1,13 +1,13 @@
-/* 
+/*
 Imports
 */
     // Node
     const express = require('express');
-    // Inner 
+    // Inner
     const Controllers = require('../controller/index');
 //
 
-/* 
+/*
 Defintiion
 */
     class RouterClass{
@@ -58,21 +58,21 @@ Defintiion
                     console.log(apiError)
                 })
             })
-            
-            
+
+
             // Define backoffice route for index
-            this.router.get('/', this.passport.authenticate('jwt', { 
-                session: false, 
-                failureRedirect: '/login' 
+            this.router.get('/', this.passport.authenticate('jwt', {
+                session: false,
+                failureRedirect: '/login'
             }), (req, res) => {
                 // Get all posts from the BDD
                 Controllers.post.readAll()
                 .then( apiResponse => {
                     // Render index vue with data
-                    return res.render('index', { 
-                        msg: 'Posts found', 
+                    return res.render('index', {
+                        msg: 'Posts found',
                         method: req.method,
-                        err: null, 
+                        err: null,
                         data: apiResponse,
                         url: req.originalUrl,
                         status: 200
@@ -80,10 +80,10 @@ Defintiion
                 })
                 .catch( apiError => {
                     // Render index vue with error
-                    return res.render('index', { 
-                        msg: 'Posts found', 
+                    return res.render('index', {
+                        msg: 'Posts found',
                         method: req.method,
-                        err: apiError, 
+                        err: apiError,
                         data: null,
                         url: req.originalUrl,
                         status: 404
@@ -93,10 +93,10 @@ Defintiion
 
             // Define backoffice route for index
             this.router.get('/register', (req, res) => {
-                return res.render('register', { 
-                    msg: 'Register page', 
+                return res.render('register', {
+                    msg: 'Register page',
                     method: req.method,
-                    err: null, 
+                    err: null,
                     data: null,
                     url: req.originalUrl,
                     status: 200
@@ -112,10 +112,10 @@ Defintiion
                 })
                 .catch( apiError => {
                     // Render index vue with error
-                    return res.render('register', { 
-                        msg: 'User not registered', 
+                    return res.render('register', {
+                        msg: 'User not registered',
                         method: req.method,
-                        err: apiError, 
+                        err: apiError,
                         data: null,
                         url: req.originalUrl,
                         status: 404
@@ -125,10 +125,10 @@ Defintiion
 
             // Define backoffice route for index
             this.router.get('/login', (req, res) => {
-                return res.render('login', { 
-                    msg: 'Login page', 
+                return res.render('login', {
+                    msg: 'Login page',
                     method: req.method,
-                    err: null, 
+                    err: null,
                     data: null,
                     url: req.originalUrl,
                     status: 200
@@ -144,10 +144,10 @@ Defintiion
                 })
                 .catch( apiError => {
                     // Render index vue with error
-                    return res.render('login', { 
-                        msg: 'User not logged', 
+                    return res.render('login', {
+                        msg: 'User not logged',
                         method: req.method,
-                        err: apiError, 
+                        err: apiError,
                         data: null,
                         url: req.originalUrl,
                         status: 404
@@ -162,10 +162,10 @@ Defintiion
             // Define backoffice route to display form to create new post
             this.router.get('/post/create', (req, res) => {
                 // Render edit vue with data
-                return res.render('create', { 
-                    msg: 'Display vue create', 
+                return res.render('create', {
+                    msg: 'Display vue create',
                     method: req.method,
-                    err: null, 
+                    err: null,
                     data: { title:undefined, content: undefined },
                     url: req.originalUrl,
                     status: 200
@@ -177,15 +177,14 @@ Defintiion
                 // Get all posts from the BDD
                 Controllers.post.createOne(req)
                 .then( apiResponse => {
-                    // Redirect to edit page
                     return res.redirect(`/post/edit/${apiResponse._id}`)
                 })
                 .catch( apiError => {
                     // Render create vue with error
-                    return res.render('create', { 
-                        msg: 'Posts not created', 
+                    return res.render('create', {
+                        msg: 'Posts not created',
                         method: req.method,
-                        err: apiError, 
+                        err: apiError,
                         data: { title: undefined, content: undefined },
                         url: req.originalUrl,
                         status: 404
@@ -199,10 +198,10 @@ Defintiion
                 Controllers.post.readOne(req)
                 .then( apiResponse => {
                     // Render edit vue with data
-                    return res.render('edit', { 
-                        msg: 'Post found', 
+                    return res.render('edit', {
+                        msg: 'Post found',
                         method: req.method,
-                        err: null, 
+                        err: null,
                         data: apiResponse,
                         url: req.originalUrl,
                         status: 200
@@ -210,10 +209,10 @@ Defintiion
                 })
                 .catch( apiError => {
                     // Render edit vue with error
-                    return res.render('edit', { 
-                        msg: 'Post not found', 
+                    return res.render('edit', {
+                        msg: 'Post not found',
                         method: req.method,
-                        err: apiError, 
+                        err: apiError,
                         data: null,
                         url: req.originalUrl,
                         status: 404
@@ -230,10 +229,10 @@ Defintiion
                     Controllers.post.readOne(req)
                     .then( postData => {
                         // Render edit vue with data
-                        return res.render('edit', { 
-                            msg: 'Post found', 
+                        return res.render('edit', {
+                            msg: 'Post found',
                             method: req.method,
-                            err: null, 
+                            err: null,
                             data: postData,
                             url: req.originalUrl,
                             status: 200
@@ -241,23 +240,23 @@ Defintiion
                     })
                     .catch( postError => {
                         // Render edit vue with data
-                        return res.render('edit', { 
-                            msg: 'Post not found', 
+                        return res.render('edit', {
+                            msg: 'Post not found',
                             method: req.method,
-                            err: postError, 
+                            err: postError,
                             data: {title: undefined, content: undefined},
                             url: req.originalUrl,
                             status: 200
                         })
                     })
-                    
+
                 })
                 .catch( apiError => {
                     // Render edit vue with error
-                    return res.render('edit', { 
-                        msg: 'Post not updated', 
+                    return res.render('edit', {
+                        msg: 'Post not updated',
                         method: req.method,
-                        err: apiError, 
+                        err: apiError,
                         data: null,
                         url: req.originalUrl,
                         status: 404
@@ -283,17 +282,17 @@ Defintiion
                     return res.redirect('/');
                 })
             })
-            
+
             // Define route to display one single post
             this.router.get('/post/:id', (req, res) => {
                 // Get all posts from the BDD
                 Controllers.post.readOne(req)
                 .then( apiResponse => {
                     // Render edit vue with data
-                    return res.render('single', { 
-                        msg: 'Post found', 
+                    return res.render('single', {
+                        msg: 'Post found',
                         method: req.method,
-                        err: null, 
+                        err: null,
                         data: apiResponse,
                         url: req.originalUrl,
                         status: 200
@@ -301,10 +300,10 @@ Defintiion
                 })
                 .catch( apiError => {
                     // Render edit vue with error
-                    return res.render('single', { 
-                        msg: 'Post not found', 
+                    return res.render('single', {
+                        msg: 'Post not found',
                         method: req.method,
-                        err: apiError, 
+                        err: apiError,
                         data: null,
                         url: req.originalUrl,
                         status: 404
@@ -342,7 +341,7 @@ Defintiion
 
 //
 
-/* 
+/*
 Export
 */
     module.exports = RouterClass;

@@ -25,7 +25,6 @@ Defintiion
 
             // Define API route to create on data
             this.router.post('/post/create', (req, res) => {
-
             // TODO: check body data
                 Controllers.post.createOne(req)
                 .then( apiResponse => res.json( { data: apiResponse, err: null } ))
@@ -42,14 +41,6 @@ Defintiion
             this.router.get('/:endpoint', (req, res) => {
                 // User the controller to get data
                 Controllers[req.params.endpoint].readAll()
-                .then( apiResponse => res.json( { data: apiResponse, err: null } ))
-                .catch( apiError => res.json( { data: null, err: apiError } ))
-            })
-
-            // Define API route to get one data
-            this.router.get('/:endpoint/:id', (req, res) => {
-                // User the controller to get data
-                Controllers[req.params.endpoint].readOne(req)
                 .then( apiResponse => res.json( { data: apiResponse, err: null } ))
                 .catch( apiError => res.json( { data: null, err: apiError } ))
             })

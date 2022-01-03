@@ -1,12 +1,13 @@
-/* 
+/*
 Imports
 */
     // Node
     const express = require('express');
     const Controllers = require('../controller/index');
+    const { signAccessToken } = require('../helpers/jwtHelper')
 //
 
-/* 
+/*
 Defintiion
 */
     class RouterClass{
@@ -24,14 +25,11 @@ Defintiion
                 .catch( apiError => res.json( { data: null, err: apiError } ))
             })
 
-            // Define API route to log user
             this.router.post('/login', (req, res) => {
-                // TODO: check body data
                 Controllers.auth.login(req, res)
-                .then( apiResponse => res.json( { data: apiResponse, err: null } ))
-                .catch( apiError => res.json( { data: null, err: apiError } ))
+                .then( apiResponse => res.json( { data: apiResponse , err: null } ))
+                .catch( apiError => res.json( { data: null, err: apiError }))
             })
-
             // Define AUTH route to get user info from JWT
             this.router.get('/me', this.passport.authenticate('jwt', { session: false }), (req, res) => {
                 //
@@ -49,7 +47,7 @@ Defintiion
 
 //
 
-/* 
+/*
 Export
 */
     module.exports = RouterClass;

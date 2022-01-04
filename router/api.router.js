@@ -27,7 +27,8 @@ Defintiion
             this.router.post('/post/create', (req, res) => {
             // TODO: check body data
                 Controllers.post.createOne(req)
-                .then( apiResponse => res.json( { data: apiResponse, err: null } ))
+                .then(req => console.log(req))
+                .then( apiResponse => res.json( { data: apiResponse, err: null }))
                 .catch( apiError => res.json( { data: null, err: apiError } ))
             })
             this.router.get('/posts/', (res) => {

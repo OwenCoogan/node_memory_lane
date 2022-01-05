@@ -4,7 +4,19 @@ Imports
     // Node
     const express = require('express');
     const Controllers = require('../controller/index');
+    const multer = require('multer');
+    const fs = require('fs');
 //
+    var storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+        cb(null, 'uploads')
+        },
+        filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now())
+        }
+    })
+
+    var upload = multer({ storage: storage })
 
 /*
 Defintiion
@@ -22,7 +34,24 @@ Defintiion
                 .then( apiResponse => res.json( { data: apiResponse, err: null } ))
                 .catch( apiError => res.json( { data: null, err: apiError } ))
             })
+            this.router.post('/posts/upload/:id', upload.single('picture'), (req, res) => {
+                var img = fs.readFileSync(req.file.path);
+                var encode_image = img.toString('base64');
+             // Define a JSONobject for the image attributes for saving to database
 
+             var finalImg = {
+                  contentType: req.file.mimetype,
+                  image:  new Buffer(encode_image, 'base64')
+               };
+            db.collection('images').insertOne(finalImg, (err, result) => {
+                  console.log(result)
+
+                if (err) return console.log(err)
+
+                console.log('saved to database')
+                res.redirect('/')
+              })
+            })
             // Define API route to create on data
             this.router.post('/post/create', (req, res) => {
             // TODO: check body data

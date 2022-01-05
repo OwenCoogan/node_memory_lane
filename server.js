@@ -1,4 +1,4 @@
-/* 
+/*
 Imports
 */
     // Node
@@ -15,7 +15,7 @@ Imports
 //
 
 
-/* 
+/*
 Server definition
 */
     class ServerClass{
@@ -42,7 +42,7 @@ Server definition
                 // Use next() function to continue routing
                 next();
             });
-            
+
             // Static path configuration
             this.server.set( 'views', __dirname + '/www' );
             this.server.use( express.static(path.join(__dirname, 'www')) );
@@ -105,7 +105,7 @@ Server definition
 //
 
 
-/* 
+/*
 Start server
 */
     const MyServer = new ServerClass();

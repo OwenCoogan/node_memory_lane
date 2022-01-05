@@ -31,8 +31,13 @@ Defintiion
                 .then( apiResponse => res.json( { data: apiResponse, err: null }))
                 .catch( apiError => res.json( { data: null, err: apiError } ))
             })
-            this.router.get('/posts/', (res) => {
+            this.router.get('/posts/', this.passport.authenticate('jwt', { session: false }), ( res) => {
                 Controllers.post.readAll()
+                .then( apiResponse => res.json( { data: apiResponse, err: null } ))
+                .catch( apiError => res.json( { data: null, err: apiError } ))
+            })
+            this.router.get('/posts/:id', ( req,res) => {
+                Controllers.post.readOne(req)
                 .then( apiResponse => res.json( { data: apiResponse, err: null } ))
                 .catch( apiError => res.json( { data: null, err: apiError } ))
             })

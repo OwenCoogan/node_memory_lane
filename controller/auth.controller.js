@@ -33,13 +33,23 @@ Functions
                 if( passwordValidation) {
                     const userToken = data.generateJwt(data);
                     const payload = {
-                        user : decryptData(data, 'firstname', 'lastname'),
                         accessToken: userToken
                     }
                     res.cookie(process.env.COOKIE_NAME, userToken);
                     return resolve(payload)
                 }
                 else{ return reject('Password not valide') }
+            })
+            .catch( err => reject(err) )
+        })
+    }
+    const getProfile = (req, res) => {
+        console.log(req)
+        return new Promise( (resolve, reject) => {
+            Models.user.findOne( { id: req.body.user_id } )
+            .then(data=> console.log(data))
+            .then( data => {
+                return resolve(data)
             })
             .catch( err => reject(err) )
         })
@@ -51,6 +61,7 @@ Export
 */
     module.exports = {
         register,
-        login
+        login,
+        getProfile
     }
 //

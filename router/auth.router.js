@@ -32,7 +32,10 @@ Defintiion
             })
             // Define AUTH route to get user info from JWT
             this.router.get('/me', this.passport.authenticate('jwt', { session: false }), (req, res) => {
-                //
+                Controllers.auth.getProfile(req,res)
+                .then( apiResponse => console.log(apiResponse))
+                .then( apiResponse => res.json( { data: apiResponse , err: null } ))
+                .catch( apiError => res.json( { data: null, err: apiError }))
             })
         }
 

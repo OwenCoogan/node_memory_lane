@@ -8,7 +8,7 @@ Imports
     const bodyParser = require('body-parser'); //=> https://www.npmjs.com/package/body-parser
     const cookieParser = require('cookie-parser'); //=> https://www.npmjs.com/package/cookie-parser
     const passport = require('passport'); //=> https://www.npmjs.com/package/passport
-    const https = require('https');
+    const http = require('https');
 
     // Inner
     const MongoClass = require('./services/mongo.class')
@@ -83,7 +83,7 @@ Server definition
 
                 this.server.listen( this.port, options , () => {
                     console.log({
-                        node: `http://localhost:${this.port}`,
+                        node: `http:s//localhost:${this.port}`,
                         db: db.url,
                     })
                 })

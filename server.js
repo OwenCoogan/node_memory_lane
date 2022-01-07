@@ -79,15 +79,14 @@ Server definition
             // Connect MongoDB
             this.mongoDb.connectDb()
             .then( db => {
-                this.server.createServer(options, (req, res) => {
-                }).this.server.listen( this.port, () => {
+
+
+                this.server.listen( this.port, options , () => {
                     console.log({
                         node: `http://localhost:${this.port}`,
                         db: db.url,
                     })
-                });
-
-
+                })
             })
             .catch( dbError => {
                 console.log(dbError)

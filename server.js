@@ -12,10 +12,12 @@ Imports
 
     // Inner
     const MongoClass = require('./services/mongo.class')
-    const PostModel = require('./models/post.model');
-//
+    const fs = require(`fs`);
 
-
+    const options = {
+    key: fs.readFileSync(`server.key`),
+    cert: fs.readFileSync(`server.cert`)
+    };
 /*
 Server definition
 */
@@ -28,37 +30,25 @@ Server definition
         }
 
         init(){
-            // Set CORS
             this.server.use( (req, res, next) => {
-                // Define allowed origins
                 const allowedOrigins = process.env.ALLOWED_ORIGINS.split(', ');
                 const origin = req.headers.origin;
-
-                // Setup CORS
                 if(allowedOrigins.indexOf(origin) > -1){ res.setHeader('Access-Control-Allow-Origin', origin)}
                 res.header('Access-Control-Allow-Credentials', true);
                 res.header('Access-Control-Allow-Methods', ['GET', 'PUT', 'POST', 'DELETE']);
                 res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-
-                // Use next() function to continue routing
                 next();
             });
 
-            // Static path configuration
             this.server.set( 'views', __dirname + '/www' );
             this.server.use( express.static(path.join(__dirname, 'www')) );
 
-            // Set server view engine
             this.server.set( 'view engine', 'ejs' );
 
-            //=> Body-parser
             this.server.use(bodyParser.json({limit: '20mb'}));
             this.server.use(bodyParser.urlencoded({ extended: true }));
 
-            //=> Use CookieParser to setup serverside cookies
             this.server.use(cookieParser(process.env.COOKIE_SECRET));
-
-            // Start config
             this.config();
         }
 
@@ -81,7 +71,6 @@ Server definition
             const BackRouterClass = require('./router/backoffice.router');
             const backRouter = new BackRouterClass({ passport });
             this.server.use('/', backRouter.init());
-
             // Start server
             this.launch();
         }
@@ -90,13 +79,15 @@ Server definition
             // Connect MongoDB
             this.mongoDb.connectDb()
             .then( db => {
-                // Start server
-                this.server.listen( this.port, () => {
+                this.server.createServer(options, (req, res) => {
+                }).this.server.listen( this.port, () => {
                     console.log({
                         node: `http://localhost:${this.port}`,
                         db: db.url,
                     })
-                })
+                });
+
+
             })
             .catch( dbError => {
                 console.log(dbError)

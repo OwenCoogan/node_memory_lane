@@ -2,3 +2,6 @@ node_modules
 .env
 /mongo
 ca-certificate.cer
+server.cert
+server.key
+.env.prod

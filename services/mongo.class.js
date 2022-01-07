@@ -16,7 +16,7 @@ Define classe
         // Start connection
         connectDb(){
             return new Promise( (resolve, reject) => {
-                mongoose.connect( this.mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true  } )
+                mongoose.connect( this.mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true , tlsCAFile:"./ca-certificate.cer"  } )
                 .then( db => resolve( { db: db, url: this.mongoUrl } ) )
                 .catch( dbError => reject( 'MongoDB not connected', dbError ) )
             });
